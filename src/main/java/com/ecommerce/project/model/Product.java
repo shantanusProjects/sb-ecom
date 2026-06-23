@@ -1,0 +1,43 @@
+package com.ecommerce.project.model;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Product {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long productId;
+
+    //at least  have 3 characters
+    @NotBlank
+    @Size(min = 3,message = "Product name must contain at least 3 characters.")
+    private String productName;
+
+    //at least  have 6 characters
+    @NotBlank
+    @Size(min = 6,message = "Product description must contain at least 6 characters.")
+    private String description;
+    private String image;
+    private Integer quantity;
+    private double price;
+    private double specialPrice;
+    private double discount;
+
+    @ManyToOne
+    @JoinColumn(name="category_id")
+    private Category category;
+
+}
