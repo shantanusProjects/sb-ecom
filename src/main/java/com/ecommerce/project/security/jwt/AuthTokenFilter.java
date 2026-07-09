@@ -18,7 +18,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
-//@Component
+@Component
 public class AuthTokenFilter extends OncePerRequestFilter {
     @Autowired
     private JwtUtils jwtUtils;
@@ -43,7 +43,6 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
                 logger.debug("Roles from JWT: {}", userDetails.getAuthorities());
-                filterChain.doFilter(request,response);
             }
         } catch (Exception e) {
             logger.error("Cannot set USer Authentication: {}",e.getMessage());
