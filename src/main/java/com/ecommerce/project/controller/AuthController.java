@@ -11,6 +11,7 @@ import com.ecommerce.project.security.request.SignupRequest;
 import com.ecommerce.project.security.response.MessageResponse;
 import com.ecommerce.project.security.response.UserInfoResponse;
 import com.ecommerce.project.security.services.UserDetailsImpl;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -49,6 +50,7 @@ public class AuthController {
     @Autowired
     RoleRepository roleRepository;
 
+    @Tag(name = "Authentication APIs",description = "APIs for Authentication")
     @PostMapping("/signin")
     public ResponseEntity<Object> authenticationUer(@RequestBody LoginRequest loginRequest){
         Authentication authentication;
@@ -75,6 +77,7 @@ public class AuthController {
                 .body(response);
     }
 
+    @Tag(name = "Authentication APIs",description = "APIs for Authentication")
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signupRequest){
         if(userRepository.existsByUserName(signupRequest.getUsername())){
@@ -123,6 +126,7 @@ public class AuthController {
         return  ResponseEntity.ok(new MessageResponse("User registered Successfully!!!"));
     }
 
+    @Tag(name = "Authentication APIs",description = "APIs for Authentication")
     @GetMapping("/username")
     public String currentUserName(Authentication authentication){
         if(authentication != null){
@@ -132,6 +136,7 @@ public class AuthController {
         }
     }
 
+    @Tag(name = "Authentication APIs",description = "APIs for Authentication")
     @GetMapping("/user")
     public ResponseEntity<UserInfoResponse> getUserDetails(Authentication authentication){
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
@@ -144,6 +149,7 @@ public class AuthController {
         return ResponseEntity.ok(response);
     }
 
+    @Tag(name = "Authentication APIs",description = "APIs for Authentication")
     @PostMapping("/signout")
     public ResponseEntity<?> signout(){
         ResponseCookie cookie = jwtUtils.getCleanJwtCookie();
